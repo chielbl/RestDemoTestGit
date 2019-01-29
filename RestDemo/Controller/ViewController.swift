@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var tabelView: UITableView!
     var items = [UserPost]()
 
     override func viewDidLoad() {
@@ -18,6 +19,18 @@ class ViewController: UIViewController {
         
         print(PostParser.getAllPosts().count)
         items = PostParser.getAllPosts()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let destination = segue.destination as! DetailViewController
+        
+        let selectedCell = sender as! UITableViewCell
+        let indexPath = tabelView.indexPath(for: selectedCell)
+        
+        let gekozenPost = items[indexPath!.row]
+        
+        destination.post = gekozenPost
     }
 
 

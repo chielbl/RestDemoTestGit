@@ -17,7 +17,7 @@ class PostParser {
         var posts = [UserPost]()
         //Indien er er iets misloopt
         do{
-            //ruwe data
+            //ruwe data uit URL halen
             let data = try Data.init(contentsOf: url!)
             //Data start met een een array, data aten omzetten naar array van objecten
             let jsonArray = try JSONSerialization.jsonObject(with: data) as! [NSObject]
@@ -41,6 +41,24 @@ class PostParser {
             print("Werkt niet!")
         }
         return posts
+    }
+    
+    static func userById(userId:Int) -> String {
+        
+        let url = URL(string: "https://jsonplaceholder.typicode.com/users/\(userId)")!
+        
+        do{
+            let data = try Data(contentsOf: url)
+            
+            let jsonObject = try JSONSerialization.jsonObject(with: data) as! NSObject
+            let userName = jsonObject.value(forKey: "username") as! String
+            
+            return userName
+        }
+        catch{
+            return "404 Not Found!"
+        }
+        
     }
     
 }
